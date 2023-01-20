@@ -78,11 +78,12 @@ Note if your values are way off, the model will either not run, or run forever. 
 A simple P-cycle model, based on chapter 8 of Modeling Methods for the marine
 sciences.
 
-This model uses a 2 box ocean, and the export flux depends on the biological
+This model uses a 2 box ocean, and the P-export flux depends on the biological
 productivity in the surface ocean
 """
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+import numpy as np
 
 F_r = 0  # River (weathering) flux of PO4 mol/s
 V = [0, 0]  # Volume of surface and deep box m^3
@@ -106,6 +107,7 @@ year_to_seconds = 60 * 60 * 24 * 365.2425  #
 tau = tau * year_to_seconds  # convert to seconds
 t_span = (0, time * year_to_seconds)  # model run time
 p = (V, F_r, THC, tau, r)  # function arguments
+max_step = t_span[1] / 100
 
 def dCdt(t, C_0, V, F_r, THC, tau, r):
     """Calculate the change in concentration as function of time
@@ -147,8 +149,14 @@ def dCdt(t, C_0, V, F_r, THC, tau, r):
 
     return [dCdt_s, dCdt_d]
 
-# integrate dC/dt
-result = solve_ivp(dCdt, t_span, C_0, args=p)
+result = solve_ivp(  # integrate dC/dt
+    dCdt,
+    t_span,
+    C_0,
+    args=p,
+    method="BDF",
+    max_step=max_step,
+)
 t = result.t / year_to_seconds / 1e6  # time in Myr
 C_s = result.y[0]  # surface box concentration in mol/m^3
 C_d = result.y[1]  # deep box concentration in mol/m^3

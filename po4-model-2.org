@@ -1,3 +1,4 @@
+#+startup: latexpreview
 #+Title: Marine Phosphate Cycling and primary productivity
 
 * Notes:
@@ -12,10 +13,10 @@
 
 In the following, we use a two box ocean model. The surface box represents the =photic zone=  of the ocean, and the deep-box represents the =deep ocean= that is below the photic zone.  The mode approximates the =thermohaline circulation= by two fluxes, $F_u$ which describes the upwelling of deep water, and $F_d$ which describes the downwelling of surface water.
 
-Marine primary productivity (i.e., photosynthesis) is typically limited by the availability of dissolved phosphate. In order to keep the model simple, we assume a linear relationship between the Phosphate concentration and the amount of =organic matter= that is produced by photosynthesis. Since we are only interested in Phosphate, there are no terms for organic matter (OM) production. However, since OM will eventually sink into the deep ocean, the organic bound Phosphate will also sink into the deep ocean. I will call this settling flux $F_{POC}$ which stands for "Particulate Organic Phosphate". So we can express  $F_POC$ as being proportional to the PO_4 concentration:
+Marine primary productivity (i.e., photosynthesis) is typically limited by the availability of dissolved phosphate. In order to keep the model simple, we assume a linear relationship between the Phosphate concentration and the amount of =organic matter= that is produced by photosynthesis. Since we are only interested in Phosphate, there are no terms for organic matter (OM) production. However, since OM will eventually sink into the deep ocean, the organic bound Phosphate will also sink into the deep ocean. I will call this settling flux $F_{POP}$ which stands for "Particulate Organic Phosphate". So we can express  $F_{POP}$ as being proportional to the PO_4 concentration:
 
 \begin{equation}\label{}
-F_{POC} = [PO_4] \times \frac{V_S}{\tau}
+F_{POP} = [PO_4] \times \frac{V_S}{\tau}
 \end{equation}
 
 where $\tau$ is a constant, and $V_S$ is the volume of the surface box. Now, why the so complicated? Consider the definition of the residence time:
@@ -26,7 +27,7 @@ if we re-arrange this, we get:
 \begin{equation}\label{}
 F = \frac{M}{R_t}
 \end{equation}
-which is the same as $F_{POC}$ equation above.  In other words, $\tau$ is the residence time of phosphate in the surface ocean.  Neat!
+which is the same as $F_{POP}$ equation above.  In other words, $\tau$ is the residence time of phosphate in the surface ocean.  Neat!
 
 We can now describe the equations that govern [PO_4] in the surface and deep ocean
 #+attr_org: :width 400
@@ -45,7 +46,7 @@ ocean. For our model, we sill assume that the remineralization efficiency is
 about 99% percent. I.e., only 1% percent of the marine export productivity is
 buried in the sediments. We can thus write:
 \begin{equation}\label{}
-F_b = F_{POC} \times (1 -\epsilon)
+F_b = F_{POP} \times (1 -\epsilon)
 \end{equation}
 where $\epsilon$ denotes the burial efficiency (i.e., 99% = 0.99). 
 
@@ -83,15 +84,16 @@ productivity in the surface ocean
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
-F_r = 1.5e3  # River (weathering) flux of PO4 mol/s
-V = [30e15, 1.33e18]  # Volume of surface and deep box m^3
-THC = 25.0e6  # m^3/s
+F_r = 0  # River (weathering) flux of PO4 mol/s
+V = [0, 0]  # Volume of surface and deep box m^3
+THC = 0  # m^3/s
 tau = 100  # P residency time in surface ocean in years
 r = 0.99  # remineralization efficiency
 C_0 = [0, 0]  # initial P in surface and deep box
-time = 4e6  # years
-print(f"Vs = {V[0]:.2e}m^3, C_0_s = {C_0[0]:.2f}mol/m^3")
-print(f"Vd = {V[1]:.2e}M^3, C_0_d = {C_0[1]:.2f}mol/M^3")
+time = 4e6  # run time in years
+show_deep_ocean_data = True # True or False
+print(f"Vs = {V[0]:.2e} m^3, C_0_s = {C_0[0]:.2f} mol/m^3")
+print(f"Vd = {V[1]:.2e} m^3, C_0_d = {C_0[1]:.2f} mol/m^3")
 print(f"tau = {tau} yrs, r = {r:.2f}, run time = {time:.2e} yrs")
 #+END_SRC
 
@@ -156,7 +158,8 @@ print(
 )
 fig, ax = plt.subplots()
 ax.plot(t, C_s, color="C0", label="Surface Ocean")
-ax.plot(t, C_d, color="C1", label="Deep Ocean")
+if show_deep_ocean_data:
+    ax.plot(t, C_d, color="C1", label="Deep Ocean")
 ax.set_xlabel("Time [Myr]")
 ax.set_ylabel("P concentration [mol/m^3]")
 ax.legend()
@@ -168,59 +171,4 @@ plt.show()
 Now lets do some sanity checks. Calculate the residence time for the phosphate
 in the deep ocean and check that it is around 609kyrs. If not, there is a
 mistake in the boundary conditions.
-
-
-
-* Assignment
-
-*** Uptake efficiency and residence time 
-The marine export productivity is an important component of the carbon cycle. It acts as pumping
-mechanism that removes CO_{2} from the surface waters and stores it in the ocean. It has been suggested
-that artificial fertilization of the surface waters could help to remove more CO_{2} from the
-atmosphere. For now, lets investigate how changes in phosphate uptake affect the residence time and
-phosphate concentration in the surface and deep ocean. Fun fact, the residence time of phosphate in
-today's surface ocean is on the order of 1 year.
-
-Create an excel spreadsheet and record/calculate the following values:
-
-| *$\tau$ [yrs]* | *C_S [mol/m^3]* | *C_DC_S [mol/m^3]* | *DC C_S [mol/l]* | *Rt_D [yrs]* |
-|-------------+-----------------+--------------------+------------------+--------------|
-|           1 |               0 |                  0 |                0 |            0 |
-|          10 |               0 |                  0 |                0 |            0 |
-|          50 |               0 |                  0 |                0 |            0 |
-|         100 |               0 |                  0 |                0 |            0 |
-|         200 |               0 |                  0 |                0 |            0 |
-
-When you are done, save the spreadsheet, edit this table and transfer the data from the
-spreadsheet. Note, it is likely useful to explicitly set the number format, so that excel uses
-scientific notation (e.g., 1E11 etc.).
-
-- How does biological uptake efficiency (i.e. the speed of photosynthetic organic matter production), affect the concentration of phosphate in the surface ocean?
-- Does the change in the biological uptake efficiency  affect the concentration difference between the surface and deep ocean?
-- Why does the change in biological uptake efficiency affect the residence time of phosphate in the deep ocean?
-
-*** Uptake efficiency and marine export productivity 
-
-Using your previous spreadsheet, calculate the following values (the equations are given above)
-
-| *$\tau$ [yrs]* | *Fd [mol/s]* | *F_POC [mol/s]* |
-|-------------+--------------+-----------------|
-|           1 |            0 |               0 |
-|          10 |            0 |               0 |
-|          50 |            0 |               0 |
-|         100 |            0 |               0 |
-|         200 |            0 |               0 |
-
-- Compare the magnitude of the particulate organic matter flux against the amount phosphate that is transported by the thermohaline circulation through downwelling ($F_d$).
-- Why does increasing the biological uptake efficiency not increase the biological export production?
-- Based on the answer in the previous section, what would we need to do in order to increase the biological CO_{2} pump by a factor of 2?
-- Can you think of a way to test this with your model? 
-
-
-** Adding  this workbook to obsidian
-
-2) Right click on the image in the jupyter notebook, and select =save image as= and save it into the images directory Obsidian vault.
-3) Using the =File= dialogue under the jupyter logo, select "download as markdown" and save the file into your Obsidian vault.
-4) Open the note and create links as a appropriate. If this fails, speak up.
-
 

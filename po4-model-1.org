@@ -44,7 +44,7 @@ import matplotlib.pyplot as plt
 F_r =   # River (weathering) flux of PO4 mol/s
 V =  # Volume of ocean [m^3]
 C_0 = [0]  # initial P concentration in ocean
-print(f"F_r = {F_r:.2e}, V = {V:.2e}, C_0 = {C_0[0]:.2f}")
+print(f"F_r = {F_r:.2e} mol/s, V = {V:.2e} m^3, C_0 = {C_0[0]:.2f} mol/m^3")
 #+END_SRC
 
 * Execute the model 
@@ -94,43 +94,5 @@ Now lets do some sanity checks. Your total phosphate mass should be about
 2.85e+16 mol, and your residence time should be around 601 kyrs. If not, there
 is a mistake in the boundary conditions.
 
-* Assignment
-
-** Residence time vs steady state 
-Add a new text cell with following list items (and their answers):
-- Calculate the residence time of phosphate.
-- Describe the relationship between residence time and the time it takes to
-  achieve steady state phosphate concentrations. Pay attention to the
-  concentration value you attain for the residence time point. Verify your
-  observation by rerunning your the model with an initial phosphate
-  concentration of =6E-3=. *Note: The square brackets are required!*
-- Explain in your own words why the phosphate concentration changes rapidly at
-  the beginning, and slowly at the end.
-
-** Residence time vs. weathering flux
-
-Using the code above, run the following three experiments:
-1. =F_r= = 3000 mol/s
-2. =F_r= = 1500 mol/s
-3. =F_r= = 750 mol/s
-
-use an excel sheet to record the flux, and the steady state phosphate
-concentration, and then use excel to calculate the resulting residence time. Record your results in this table (round the Rt values to kyrs)
-
-| *Fr [mol/s]* | *[PO4] [mM]* | *Rt [ky]* |
-|--------------+--------------+-----------|
-|         3000 |            0 |         0 |
-|         1500 |            0 |         0 |
-|          750 |            0 |         0 |
-
-Add a new text cell below and explain why the residence time does not change,
-even so the flux changes dramatically. 
-
-** Adding  this workbook to obsidian
-
-1) In your obsidian vault, create a new directory called =images= (all lowercaps!).
-2) Right click on the image in the jupyter notebook, and select =save image as= and save it into the images directory you just created.
-3) Using the =File= dialogue under the jupyter logo, select "download as markdown" and save the file into your Obsidian vault.
-4) Open the note and create links as a appropriate. If this fails, speak up.
 
 

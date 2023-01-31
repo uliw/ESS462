@@ -9,6 +9,9 @@
   order since each cell depends on the output of the previous cell.
 
 * Model structure
+:PROPERTIES:
+:ID:       4aa5f820-dbe2-4ef4-a068-6617d0e3a3a7
+:END:
 
 We use simple one box model, where the weathering of crustal rocks releases PO_4 that is then transported by rivers in to the ocean. The resulting evolution of the marine phosphate concentration can then be described as
 
@@ -26,7 +29,6 @@ For this experiment we assume that F_w is constant, and that F_b is a given frac
 \end{equation}
 where $c$ is a constant. In the following, we will use numerical integration to
 solve this equation over a time span of 1Myrs.
-
 * Model boundary conditions
 
 Find the values for =F_r= , =V= in your obsidian notes, and edit the below code

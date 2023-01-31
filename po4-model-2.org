@@ -10,6 +10,9 @@
   order since each cell depends on the output of the previous cell.
 
 * Model structure
+:PROPERTIES:
+:ID:       3546b7cb-f7ef-4592-945c-4b75e15b5448
+:END:
 
 In the following, we use a two box ocean model. The surface box represents the =photic zone=  of the ocean, and the deep-box represents the =deep ocean= that is below the photic zone.  The mode approximates the =thermohaline circulation= by two fluxes, $F_u$ which describes the upwelling of deep water, and $F_d$ which describes the downwelling of surface water.
 

@@ -11,6 +11,8 @@ def load_woa_data(species, depth_level):
     import pathlib as pl
     import iris
 
+    iris.FUTURE.datum_support=True
+    
     ou_url = "https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DATA/o2sat/netcdf/all/1.00/woa18_all_O00_01.nc"
 
     p_url = "https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DATA/phosphate/netcdf/all/1.00/woa18_all_p00_01.nc"

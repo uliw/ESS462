@@ -128,7 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.org
-*.py
 /.directory
 /ltximg/*.png
 /images/.directory

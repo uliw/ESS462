@@ -16,29 +16,23 @@
 
 In the following, we use a two box ocean model. The surface box represents the =photic zone=  of the ocean, and the deep-box represents the =deep ocean= that is below the photic zone.  The mode approximates the =thermohaline circulation= by two fluxes, $F_u$ which describes the upwelling of deep water, and $F_d$ which describes the downwelling of surface water.
 
-Marine primary productivity (i.e., photosynthesis) is typically limited by the availability of dissolved phosphate. In order to keep the model simple, we assume a linear relationship between the Phosphate concentration and the amount of =organic matter= that is produced by photosynthesis. Since we are only interested in Phosphate, there are no terms for organic matter (OM) production. However, since OM will eventually sink into the deep ocean, the organic bound Phosphate will also sink into the deep ocean. I will call this settling flux $F_{POP}$ which stands for "Particulate Organic Phosphate". So we can express  $F_{POP}$ as being proportional to the PO_4 concentration:
+Marine primary productivity (i.e., photosynthesis) is typically limited by the availability of dissolved phosphate. In order to keep the model simple, we assume a linear relationship between the Phosphate concentration and the amount of =organic matter= that is produced by photosynthesis. Since we are only interested in Phosphate, there are no terms for organic matter (OM) production. However, since OM will eventually sink into the deep ocean, the organic bound Phosphate will also sink into the deep ocean. I will call this settling flux $F_{POP}$ which stands for "Particulate Organic Phosphate".  
+
+This flux will depend on the concentration of phosphate, and on the speed how fast organisms can metabolize phosphate (aka phosphate uptake efficiency). There a different ways to describe the uptake efficiency. We could, e.g., state that 70% of the phosphate that is supplied through upwelling ($F_u$) is used for organic matter production. Another way is to state that all phosphate reaching the surface ocean is used within 1 year. In the following we will describe the uptake efficiency as a function of the phosphate residency time in the surface ocean. So $F_{POP}$ is being proportional to the PO_4 concentration and the uptake efficiency $V_S/\tau$:
 
 \begin{equation}\label{}
-F_{POP} = [PO_4] \times \frac{V_S}{\tau}
+F_{POP} = [PO_4]_S \times \frac{V_S}{\tau}
 \end{equation}
 
-where $\tau$ is a constant, and $V_S$ is the volume of the surface box. Now, why the so complicated? Consider the definition of the residence time:
-\begin{equation}\label{}
-R_t = \frac{M}{F}
-\end{equation}
-if we re-arrange this, we get:
-\begin{equation}\label{}
-F = \frac{M}{R_t}
-\end{equation}
-which is the same as $F_{POP}$ equation above.  In other words, $\tau$ is the residence time of phosphate in the surface ocean.  Neat!
+where $\tau$ is the residence of phosphate in the surface ocean and $V_S$ is the volume of the surface box.
 
 We can now describe the equations that govern [PO_4] in the surface and deep ocean
 #+attr_org: :width 400
-[[./images/mpc.png]]
+[[./images/mpc.png]]nf
 
 Similar to the previous  model, our fluxes are not static (with the exception of the weathering flux). $F_u$ and $F_b$ depend on the velocity of thermohaline circulation, and the respective phosphate concentration in each box:
 \begin{equation}\label{}
-F_u = thc \times [PO_4]_{D}
+F_d = thc \times [PO_4]S_{}
 \end{equation}
 where =thc= denotes the velocity of  the thermohaline circulation, and $[PO_4]_D$ the concentration in the deep ocean.  A similar equation can be written for $F_d$. 
 
@@ -178,8 +172,4 @@ ax.grid()
 fig.tight_layout()
 plt.show()
 #+END_SRC
-
-Now lets do some sanity checks. Calculate the residence time for the phosphate
-in the deep ocean and check that it is around 609kyrs. If not, there is a
-mistake in the boundary conditions.
 

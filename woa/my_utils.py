@@ -17,7 +17,6 @@ def get_depth_interval(depth):
 
     return interval
 
-
 def load_woa_data(variable, depth_level, time_frame, resolution, data_set):
     """setup the urls where the data can be found, do some sanity checks on the
     input, download data if necessary, otherwise use local copy, import data,
@@ -57,7 +56,7 @@ def load_woa_data(variable, depth_level, time_frame, resolution, data_set):
         if variable != "Temperature":
             subdir = "all"
         else:
-            subdir = "A5B7"  # 2005 - 2017 data
+            subdir = "A5B7" # 2005 - 2017 data
         url = (
             f"https://www.ncei.noaa.gov/data/oceans/woa/{data_set}/"
             f"DATA/{dir_name}/netcdf/{subdir}/{rsd}/"
@@ -92,7 +91,6 @@ def load_woa_data(variable, depth_level, time_frame, resolution, data_set):
     c = cube[0, depth_level, ...]  # Slice singleton time and first level.
     print("Data imported")
     return c, cb_label, cube
-
 
 def make_map(cube, projection, figsize, cb_label, color_scheme, z_min_max, levels):
     """Set up map parameters"""
@@ -137,6 +135,5 @@ def make_map(cube, projection, figsize, cb_label, color_scheme, z_min_max, level
     )
 
     cb.ax.set_xlabel(cb_label)
-    # ax.stock_img()
 
     return fig, ax

@@ -133,3 +133,5 @@ dmypy.json
 /.directory
 /ltximg/*.png
 /images/.directory
+.pdf
+.tex

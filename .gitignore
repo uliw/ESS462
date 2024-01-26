@@ -140,3 +140,5 @@ dmypy.json
 *.org
 *.py
 ltximg
+*.ob-jupyter
+.directory

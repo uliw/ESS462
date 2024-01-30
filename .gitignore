@@ -140,3 +140,5 @@ dmypy.json
 ltximg
 *.ob-jupyter
 .directory
+.virtual_documents
+flycheck_*
